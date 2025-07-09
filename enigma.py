@@ -20,6 +20,7 @@ class Enigma:
 
     def encrypt_letter(self, ch):
         if ch not in self.hash_map:
+            self.advance_wheels()  ## im trying to add
             return ch
 
         i = self.hash_map[ch]
@@ -33,12 +34,19 @@ class Enigma:
         c1 = self.revers_hash_map[i]
         c2 = self.reflector_map[c1]
         i = self.hash_map[c2]
-        if checked_val != 0:
-            i -= checked_val
-        else:
-            i -= 1
-        i = i % 26
 
+        # if checked_val != 0:
+        #     i -= checked_val
+        # else:
+        #     i -= 1
+        # i = i % 26
+
+## trying to change to:
+        if checked_val != 0:
+            i = (i - checked_val) % 26
+        else:
+            i = (i - 1) % 26
+##
         c3 = self.revers_hash_map[i]
         self.advance_wheels()
         return c3
